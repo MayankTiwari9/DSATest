@@ -1,5 +1,8 @@
 public class Raman {
     public static int raman(int n, int k, String s){
+
+        // 14 of 18 test cases passing
+        
         int score = 0;
         int zeros = 0;
         for (char c: s.toCharArray()) {

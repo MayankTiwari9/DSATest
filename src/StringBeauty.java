@@ -1,5 +1,7 @@
 public class StringBeauty {
     static int stringBeauty(String k1, String k2){
+
+        // 12 of 16 test case passing 
         String lowerCaseK1 = k1.toLowerCase();
         String lowerCaseK2 = k2.toLowerCase();
 
