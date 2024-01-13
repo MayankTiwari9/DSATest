@@ -1,43 +1,56 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Scanner;
 
 public class Ethan {
-
-    //Not Correct
-
-    static long maximumReward(int n, List<Pair<Long, Long>> tasks) {
-        tasks.sort((task1, task2) -> Long.compare(task1.second, task2.second));
-
-        long currentTime = 0;
-        long totalReward = 0;
-
-        for (Pair<Long, Long> task : tasks) {
-            currentTime += task.first;
-            totalReward += Math.max(0, task.second - currentTime);
-        }
-
-        return totalReward;
-    }
-
-    static class Pair<L, R> {
-        L first;
-        R second;
-
-        public Pair(L first, R second) {
-            this.first = first;
-            this.second = second;
-        }
-    }
-
     public static void main(String[] args) {
-        List<Pair<Long, Long>> tasks = new ArrayList<>();
-        tasks.add(new Pair<>(6L, 10L));
-        tasks.add(new Pair<>(8L, 15L));
-        tasks.add(new Pair<>(5L, 12L));
 
-        int n = tasks.size();
+        // Corrected 
+        
+        Scanner scanner = new Scanner(System.in);
 
-        long result = maximumReward(n, tasks);
-        System.out.println(result);
+        int n = scanner.nextInt();
+        Task[] tasks = new Task[n];
+
+        for (int i = 0; i < n; i++) {
+            int duration = scanner.nextInt();
+            int deadline = scanner.nextInt();
+            tasks[i] = new Task(duration, deadline);
+        }
+
+        Arrays.sort(tasks, Comparator.comparing(Task::getDuration).thenComparing(Task::getDeadline));
+
+        int maxReward = calculateMaxReward(tasks);
+        System.out.println(maxReward);
+    }
+
+    private static int calculateMaxReward(Task[] tasks) {
+        int currentTime = 0;
+        int maxReward = 0;
+
+        for (Task task : tasks) {
+            currentTime += task.duration;
+            maxReward += task.deadline - currentTime;
+        }
+
+        return maxReward;
+    }
+
+    static class Task {
+        int duration;
+        int deadline;
+
+        public Task(int duration, int deadline) {
+            this.duration = duration;
+            this.deadline = deadline;
+        }
+
+        public int getDuration() {
+            return duration;
+        }
+
+        public int getDeadline() {
+            return deadline;
+        }
     }
 }
